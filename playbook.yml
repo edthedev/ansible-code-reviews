@@ -5,6 +5,7 @@
   sudo: yes
   vars:
     - site_path: /home/gerrit2
+    - gerrit_site: /home/gerrit2/gerrit_site
     - gerrit_war: source_files/gerrit.war
   tasks:
     - name: Install system packages
@@ -15,6 +16,7 @@
         - postgresql-server.x86_64 # Not required, but preferred for storing Gerrit data.
         - python-psycopg2.x86_64 # Allows Ansible to run PostGres commands.
         - libselinux-python 
+        - gitweb # Gitweb is convenient for use with Gerrit
       notify: start postgres
     - name: gerrit2 user
       user: name=gerrit2
