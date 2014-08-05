@@ -26,3 +26,8 @@ Create the Postgres Database::
     createdb --username=postgres -E UTF-8 -O gerrit2 reviewdb
     # Press Ctrl+D to exit the Psql shell.
 
+Start Gerrit::
+
+    vagrant ssh
+    sudo su gerrit2
+    java -jar /home/gerrit2/gerrit.war init -d /home/gerrit2

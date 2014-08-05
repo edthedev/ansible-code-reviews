@@ -2,14 +2,13 @@
 - hosts: all
   user: vagrant
   gather_facts: False 
-  sudo: no
+  sudo: yes
   vars:
-    - site_path: /home/vagrant/site_path
+    - site_path: /home/gerrit2
     - gerrit_war: source_files/gerrit.war
   tasks:
     - name: Install system packages
       yum: pkg={{ item }} state=installed
-      sudo: yes
       with_items:
         - git-core 
         - java-1.7.0-openjdk.x86_64 # Required for Gerrit
@@ -19,15 +18,14 @@
       notify: start postgres
     - name: gerrit2 user
       user: name=gerrit2
-      sudo: yes
     - name: disable selinux # Ansible copy command fails, otherwise.
       selinux: state=disabled
-      sudo: yes
     - name: setup gerrit site path
       file: dest={{site_path}} state=directory
     - name: install .war
       copy: src={{gerrit_war}} dest={{site_path}}
-
+    - name: install gerrit config file
+      file: state=link src=/vagrant/gerrit.config dest={{site_path}}/etc/gerrit.conf
   handlers:
     - name: start postgres  
       service: name=postgresql state=started
