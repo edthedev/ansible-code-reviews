@@ -30,4 +30,10 @@ Start Gerrit::
 
     vagrant ssh
     sudo su gerrit2
-    java -jar /home/gerrit2/gerrit.war init -d /home/gerrit2
+
+    # Initialize Gerrit
+    # Don't do this step. Use the Ansible gerrit.config instead.
+    # java -jar /home/gerrit2/gerrit.war init -d /home/gerrit2
+
+    # Start Gerrit
+    /home/gerrit2/bin/gerrit.sh start
