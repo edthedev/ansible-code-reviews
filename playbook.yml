@@ -3,8 +3,9 @@
   user: vagrant
   gather_facts: False 
   sudo: no
-  vars_files:
-    - passwords.yml
+  vars:
+    - site_path: /vagrant/site_path
+    - gerrit_war: files/gerrit.war
   tasks:
     - name: Install system packages
       yum: pkg={{ item }} state=installed
@@ -14,9 +15,15 @@
         - java-1.7.0-openjdk.x86_64 # Required for Gerrit
         - postgresql-server.x86_64 # Not required, but preferred for storing Gerrit data.
         - python-psycopg2.x86_64 # Allows Ansible to run PostGres commands.
-    - name: python stuff 
+      notify: start postgres
+    - name: gerrit2 user
+      user: name=gerrit2
       sudo: yes
-      pip: name=psycopg2
-    - name: gerrit db user
-# TODO: Back off from SUPERUSER, if possible.
-      postgresql_user: name=gerrit password={{db_pass}} role_attr_flags=SUPERUSER
+    - name: setup gerrit site path
+      directory: dest={{site_path}} state=exists
+    - name: install .war
+
+  handlers:
+    - name: start postgres  
+      service: name=postgresql state=started
+
