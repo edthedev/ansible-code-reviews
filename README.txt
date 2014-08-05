@@ -26,6 +26,12 @@ Create the Postgres Database::
     createdb --username=postgres -E UTF-8 -O gerrit2 reviewdb
     # Press Ctrl+D to exit the Psql shell.
 
+Create a Git repository::
+
+    mkdir -r /home/gerrit2/git
+    cd /home/gerrit2/git
+    git --bare init example.git
+
 Start Gerrit::
 
     vagrant ssh
@@ -39,3 +45,12 @@ Start Gerrit::
     export site_path=/home/gerrit2
     export GERRIT_SITE=/home/gerrit2/gerrit_site
     /home/gerrit2/gerrit_site/bin/gerrit.sh start
+
+
+Troubleshooting
+----------------
+
+
+Gerrit log files are at::
+
+    /home/gerrit2/gerrit_site/logs
