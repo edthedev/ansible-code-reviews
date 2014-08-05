@@ -64,6 +64,21 @@ Start httpd and mysql::
 Visit the configuration guide:
 http://www.phabricator.com/docs/phabricator/article/Configuration_Guide.html
 
+Setup Database::
+
+    /usr/bin/mysqladmin -u root password 'new-password'
+    # nevermind: /usr/bin/mysqladmin -u root -h localhost.localdomain password 'new-password'
+
+
+    cd /vagrant/phabricator
+    ./bin/config set mysql.host localhost
+    # ./bin/config set mysql.port value
+    ./bin/config set mysql.user root
+    ./bin/config set mysql.pass new-password
+
+    ./bin/storage upgrade --force --user root --password 'new-password'
+
+
 Visit localhost to check configuration status:
 http://localhost:8080/
 
