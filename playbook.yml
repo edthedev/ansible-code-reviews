@@ -4,31 +4,14 @@
   gather_facts: False 
   sudo: yes
   vars:
-    - site_path: /home/gerrit2
-    - gerrit_site: /home/gerrit2/gerrit_site
-    - gerrit_war: source_files/gerrit.war
+    - install_root: /vagrant
+    - source_root: /vagrant
   tasks:
-    - name: Install system packages
-      yum: pkg={{ item }} state=installed
-      with_items:
-        - git-core 
-        - java-1.7.0-openjdk.x86_64 # Required for Gerrit
-        - postgresql-server.x86_64 # Not required, but preferred for storing Gerrit data.
-        - python-psycopg2.x86_64 # Allows Ansible to run PostGres commands.
-        - libselinux-python 
-        - gitweb # Gitweb is convenient for use with Gerrit
-      notify: start postgres
-    - name: gerrit2 user
-      user: name=gerrit2
-    - name: disable selinux # Ansible copy command fails, otherwise.
-      selinux: state=disabled
-    - name: setup gerrit site path
-      file: dest={{site_path}} state=directory
-    - name: install .war
-      copy: src={{gerrit_war}} dest={{site_path}}
-    - name: install gerrit config file
-      file: state=link src=/vagrant/gerrit.config dest={{site_path}}/etc/gerrit.conf
-  handlers:
-    - name: start postgres  
-      service: name=postgresql state=started
+#    - name: Install Phabricator
+#      shell: source /vagrant/install_rhel-derivs.sh
+     - name: make repo path
+       file: state=directory dest=/home/vagrant/repo
+     - name: configure repo path
+       lineinfile: dest="/vagrant/phabricator/conf/default.conf.php" state=present regexp="'repository.default-local-path' => *" line="'repository.default-local-path' => '/home/vagrant/repo',"
+
 

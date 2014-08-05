@@ -15,9 +15,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.cpus = 2
   end
 
-#  config.vm.provision "ansible" do |ansible|
-#    ansible.playbook = "playbook.yml"
-#	ansible.verbose = 'vvv'
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "playbook.yml"
+	ansible.verbose = 'vvv'
 #    ansible.start_at_task = 'gerrit db user'
-#  end
+  end
 end
