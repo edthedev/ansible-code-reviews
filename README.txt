@@ -80,7 +80,10 @@ Setup Database::
 
 
 Visit localhost to check configuration status:
-http://localhost:8080/
+http://127.0.0.1:8080
+
+Note that http://localhost:8080/ will not work, because Phabricator demands a URL with a dot in it.
+
 
 Troubleshooting
 ----------------
