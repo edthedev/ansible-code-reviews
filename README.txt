@@ -51,6 +51,11 @@ Example Apache config::
       RewriteRule ^(.*)$          /index.php?__path__=$1  [B,L,QSA]
     </VirtualHost>
 
+    <Location />
+        Order deny,allow
+        Allow from all
+    </Location>
+
 Start httpd and mysql::
 
     /etc/init.d/httpd start
@@ -59,45 +64,10 @@ Start httpd and mysql::
 Visit the configuration guide:
 http://www.phabricator.com/docs/phabricator/article/Configuration_Guide.html
 
-Create the Postgres Database::
-
-    # Connect via SSH to your VM
-    vagrant ssh
-    # Start and init postgres
-    service postgresql initdb
-    sudo service postgresql start
-    # Start a Postgres Psql shell
-    sudo -u postgres psql postgres
-    # Create the gerrit database user and tables
-    createuser --username=postgres -RDIElPS gerrit2
-    createdb --username=postgres -E UTF-8 -O gerrit2 reviewdb
-    # Press Ctrl+D to exit the Psql shell.
-
-Create a Git repository::
-
-    mkdir -r /home/gerrit2/git
-    cd /home/gerrit2/git
-    git --bare init example.git
-
-Start Gerrit::
-
-    vagrant ssh
-    sudo su gerrit2
-
-    # Initialize Gerrit
-    # Don't do this step. Use the Ansible gerrit.config instead.
-    java -jar /home/gerrit2/gerrit.war init -d /home/gerrit2/gerrit_site
-
-    # Start Gerrit
-    export site_path=/home/gerrit2
-    export GERRIT_SITE=/home/gerrit2/gerrit_site
-    /home/gerrit2/gerrit_site/bin/gerrit.sh start
-
+Visit localhost to check configuration status:
+http://localhost:8080/
 
 Troubleshooting
 ----------------
+TODO: Find the Phab logs
 
-
-Gerrit log files are at::
-
-    /home/gerrit2/gerrit_site/logs
