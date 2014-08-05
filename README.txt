@@ -2,15 +2,36 @@
 Download Package Files
 -----------------------
 
-Download the latest Gerrit binary in files/gerrit.war.::
+Double check that the Phabricator install shell script is up to date::
 
-	firefox https://gerrit-releases.storage.googleapis.com/index.html
-	mv ~/Downloads/gerrit-*.war source_files/gerrit.war
-
+   https://secure.phabricator.com/book/phabricator/article/installation_guide/ 
 
 Bring up the Virtual Machine::
 
 	vagrant up
+
+Run the Phabricator install shell script::
+
+    vagrant ssh
+    cd /home/vagrant
+    source /vagrant/install_rhel-derivs.sh
+
+    ...Answer prompts...
+    ...Script will attempt to sudo yum install, as needed...
+    ...Many installs occur...
+
+    Complete!
+    Please remember to start the httpd with: /etc/init.d/httpd start
+    Please remember to start the mysql server: /etc/init.d/mysqld start
+    Press RETURN to continue, or ^C to cancel.
+
+Start httpd and mysql::
+
+    /etc/init.d/httpd start
+    /etc/init.d/mysqld
+
+Visit the configuration guide:
+http://www.phabricator.com/docs/phabricator/article/Configuration_Guide.html
 
 Create the Postgres Database::
 
