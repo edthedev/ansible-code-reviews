@@ -33,7 +33,9 @@ Start Gerrit::
 
     # Initialize Gerrit
     # Don't do this step. Use the Ansible gerrit.config instead.
-    # java -jar /home/gerrit2/gerrit.war init -d /home/gerrit2
+    java -jar /home/gerrit2/gerrit.war init -d /home/gerrit2/gerrit_site
 
     # Start Gerrit
-    /home/gerrit2/bin/gerrit.sh start
+    export site_path=/home/gerrit2
+    export GERRIT_SITE=/home/gerrit2/gerrit_site
+    /home/gerrit2/gerrit_site/bin/gerrit.sh start
