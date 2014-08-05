@@ -12,3 +12,17 @@ Bring up the Virtual Machine::
 
 	vagrant up
 
+Create the Postgres Database::
+
+    # Connect via SSH to your VM
+    vagrant ssh
+    # Start and init postgres
+    service postgresql initdb
+    sudo service postgresql start
+    # Start a Postgres Psql shell
+    sudo -u postgres psql postgres
+    # Create the gerrit database user and tables
+    createuser --username=postgres -RDIElPS gerrit2
+    createdb --username=postgres -E UTF-8 -O gerrit2 reviewdb
+    # Press Ctrl+D to exit the Psql shell.
+
