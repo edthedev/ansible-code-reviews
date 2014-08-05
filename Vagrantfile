@@ -6,7 +6,12 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "chef/centos-6.5"
-  # config.vm.network :forwarded_port, guest: 80, host: 8080
+
+# Gerrit web interface.
+  config.vm.network :forwarded_port, guest: 8080, host: 8080
+# Gerrit SSH access.
+  config.vm.network :forwarded_port, guest: 2221, host: 2221
+  config.vm.network :forwarded_port, guest: 29418, host: 29418
 
   config.vm.provider "virtualbox" do |v|
     # v.memory = 4096
