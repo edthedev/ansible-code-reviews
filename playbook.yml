@@ -4,8 +4,8 @@
   gather_facts: False 
   sudo: no
   vars:
-    - site_path: /vagrant/site_path
-    - gerrit_war: files/gerrit.war
+    - site_path: /home/vagrant/site_path
+    - gerrit_war: source_files/gerrit.war
   tasks:
     - name: Install system packages
       yum: pkg={{ item }} state=installed
@@ -15,13 +15,18 @@
         - java-1.7.0-openjdk.x86_64 # Required for Gerrit
         - postgresql-server.x86_64 # Not required, but preferred for storing Gerrit data.
         - python-psycopg2.x86_64 # Allows Ansible to run PostGres commands.
+        - libselinux-python 
       notify: start postgres
     - name: gerrit2 user
       user: name=gerrit2
       sudo: yes
+    - name: disable selinux # Ansible copy command fails, otherwise.
+      selinux: state=disabled
+      sudo: yes
     - name: setup gerrit site path
-      directory: dest={{site_path}} state=exists
+      file: dest={{site_path}} state=directory
     - name: install .war
+      copy: src={{gerrit_war}} dest={{site_path}}
 
   handlers:
     - name: start postgres  
