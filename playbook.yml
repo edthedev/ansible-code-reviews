@@ -2,16 +2,12 @@
 - hosts: all
   user: vagrant
   gather_facts: False 
-  sudo: yes
+  sudo: no
   tasks:
     - name: Install system packages
       yum: pkg={{ item }} state=installed
+      sudo: yes
       with_items:
         - git-core 
-        - git-svn 
-        - ruby 
-        - rubygems
-    - name: gems 
-      shell: gem install {{ item }}
-      with_items: 
-        - svn2git 
+        - java-1.7.0-openjdk.x86_64 # Required for Gerrit
+        - postgresql-server.x86_64 # Not required, but preferred for storing Gerrit data.
