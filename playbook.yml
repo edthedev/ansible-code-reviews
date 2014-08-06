@@ -13,7 +13,7 @@
        selinux: state=disabled
      - shell: source /vagrant/install_rhel-derivs.sh 
        args:
-         creates: {{ install_root }}/phabricator
+         creates: "{{ install_root }}/phabricator"
      - name: make repo path
        file: state=directory dest={{ repo_path }}
      - name: configure repo path
