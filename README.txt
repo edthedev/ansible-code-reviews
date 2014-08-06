@@ -78,6 +78,19 @@ Setup Database::
 
     ./bin/storage upgrade --force --user root --password 'new-password'
 
+Configure the Base URI::
+
+    cd /vagrant/phabricator
+    ./bin/config set phabricator.base-uri 'http://127.0.0.1:8080/'
+
+Start the Phabricator background daemons::
+
+    cd /vagrant/phabricator
+    ./bin/phd start
+
+Create the Phabricator repo directory::
+
+    sudo mkdir -p '/var/repo/'
 
 Visit localhost to check configuration status:
 http://127.0.0.1:8080
@@ -87,5 +100,6 @@ Note that http://localhost:8080/ will not work, because Phabricator demands a UR
 
 Troubleshooting
 ----------------
-TODO: Find the Phab logs
+
+NOTE: Logs will appear in '/var/tmp/phd/log/daemons.log'.
 
