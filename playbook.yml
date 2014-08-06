@@ -6,15 +6,15 @@
   vars:
     - install_root: /home/vagrant
   tasks:
-     - name: disable selinux # Ansible copy command fails, otherwise.
-       selinux: state=disabled
      - yum: pkg={{ item }}
        with_items:
         - python-setuptools # ReviewBoard prerequisite
-        - python-dev # ReviewBoard prerequisite
+        - python-devel.i686 # ReviewBoard prerequisite
         - ReviewBoard  # Hey, it's a package!
         - sqlite.x86_64 # Cheapo database for now.
         - memcached # Recommended for speed.
         - python-memcached # Recommended for speed.
         - patch # Required for ReviewBoard's diff viewer.
         - git-core # Needed to communicate with Git
+     #- name: disable selinux # Ansible copy command fails, otherwise.
+     #  selinux: state=disabled
