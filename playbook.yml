@@ -4,14 +4,21 @@
   gather_facts: False 
   sudo: yes
   vars:
-    - install_root: /vagrant
-    - source_root: /vagrant
+    - install_root: /home/vagrant
+    - repo_path: /var/repos
   tasks:
-#    - name: Install Phabricator
-#      shell: source /vagrant/install_rhel-derivs.sh
+     - name: system
+       yum: pkg=libselinux-python
      - name: disable selinux # Ansible copy command fails, otherwise.
-          selinux: state=disabled
+       selinux: state=disabled
+     - shell: source /vagrant/install_rhel-derivs.sh 
+       args:
+         creates: {{ install_root }}/phabricator
      - name: make repo path
-       file: state=directory dest=/home/vagrant/repo
+       file: state=directory dest={{ repo_path }}
      - name: configure repo path
-       lineinfile: dest="/vagrant/phabricator/conf/default.conf.php" state=present regexp="'repository.default-local-path' => *" line="'repository.default-local-path' => '/home/vagrant/repo',"
+       lineinfile: dest="/vagrant/phabricator/conf/default.conf.php" state=present regexp="'repository.default-local-path' => *" line="'repository.default-local-path' => '{{ repo_path }}',"
+       notify: restart apache
+  handlers:
+     - name: restart apache
+       service: name=httpd state=restarted
