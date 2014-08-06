@@ -7,7 +7,7 @@
     - install_root: /home/vagrant
   tasks:
      - name: disable selinux # Ansible copy command fails, otherwise.
-          selinux: state=disabled
+       selinux: state=disabled
      - yum: pkg={{ item }}
        with_items:
         - python-setuptools # ReviewBoard prerequisite
