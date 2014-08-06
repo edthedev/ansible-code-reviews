@@ -6,39 +6,9 @@ Bring up the Virtual Machine::
 
 	vagrant up
 
-Configure Apache::
+If anything needs to be corrected in playbook.yml, you can re-run the provision step with::
 
-    sudo vi /etc/httpd/conf/httpd.conf
-
-Example Apache config::
-    
-    <VirtualHost *>
-      # Change this to the domain which points to your host.
-      ServerName localhost
-
-      # Change this to the path where you put 'phabricator' when you checked it
-      # out from GitHub when following the Installation Guide.
-      #
-      # Make sure you include "/webroot" at the end!
-      DocumentRoot /vagrant
-
-      RewriteEngine on
-      RewriteRule ^/rsrc/(.*)     -                       [L,QSA]
-      RewriteRule ^/favicon.ico   -                       [L,QSA]
-      RewriteRule ^(.*)$          /index.php?__path__=$1  [B,L,QSA]
-    </VirtualHost>
-
-    <Location />
-        Order deny,allow
-        Allow from all
-    </Location>
-
-Start httpd and mysql::
-
-    /etc/init.d/httpd start
-    /etc/init.d/mysqld start
-
-
+    vagrant provision
 
 Create a new ReviewBoard site::
 
