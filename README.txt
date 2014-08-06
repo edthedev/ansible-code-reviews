@@ -38,16 +38,10 @@ Create a new ReviewBoard site::
 
 Configure apache::
 
-    sudo chown -R www:www /home/vagrant/localhost
+    sudo chown -R apache:apache /home/vagrant/localhost
     sudo chmod 755 /home/vagrant
 
-    sudo cp /etc/httpd/conf/httpd.conf ~
-    sudo cp /home/vagrant/localhost/conf/apache-wsgi.conf /etc/httpd/conf/httpd.conf
-
     vi /etc/httpd/conf/httpd.conf
-    # Comment out this bit: 
-    # WSGIPassAuthorization On
-
     Include /home/vagrant/localhost/conf/apache-wsgi.conf
 
 Restart Apache::
