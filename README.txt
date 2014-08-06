@@ -2,32 +2,9 @@
 Download Package Files
 -----------------------
 
-Double check that the Phabricator install shell script is up to date::
-
-   https://secure.phabricator.com/book/phabricator/article/installation_guide/ 
-
 Bring up the Virtual Machine::
 
 	vagrant up
-
-Run the Phabricator install shell script::
-
-    vagrant ssh
-    cd /home/vagrant
-    source /vagrant/install_rhel-derivs.sh
-
-    ...Answer prompts...
-    ...Script will attempt to sudo yum install, as needed...
-    ...Many installs occur...
-
-    Complete!
-    Please remember to start the httpd with: /etc/init.d/httpd start
-    Please remember to start the mysql server: /etc/init.d/mysqld start
-    Press RETURN to continue, or ^C to cancel.
-
-    ...some Git stuff...
-
-    ...Reminder to visit the configuration guide to finish configuration.
 
 Configure Apache::
 
@@ -61,31 +38,21 @@ Start httpd and mysql::
     /etc/init.d/httpd start
     /etc/init.d/mysqld start
 
-Visit the configuration guide:
-http://www.phabricator.com/docs/phabricator/article/Configuration_Guide.html
-
-Setup Database::
-
-    /usr/bin/mysqladmin -u root password 'new-password'
-    # nevermind: /usr/bin/mysqladmin -u root -h localhost.localdomain password 'new-password'
 
 
-    cd /vagrant/phabricator
-    ./bin/config set mysql.host localhost
-    # ./bin/config set mysql.port value
-    ./bin/config set mysql.user root
-    ./bin/config set mysql.pass new-password
+Create a new ReviewBoard site::
 
-    ./bin/storage upgrade --force --user root --password 'new-password'
+    vagrant ssh
+    # rb-site install /var/www/reviews.example.com
+    rb-site install /home/vagrant/example.com
 
+Visit your ReviewBoard site::
 
 Visit localhost to check configuration status:
 http://127.0.0.1:8080
 
 Note that http://localhost:8080/ will not work, because Phabricator demands a URL with a dot in it.
 
-
 Troubleshooting
 ----------------
-TODO: Find the Phab logs
-
+TODO: Find the ReviewBoard logs
