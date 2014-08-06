@@ -4,14 +4,17 @@
   gather_facts: False 
   sudo: yes
   vars:
-    - install_root: /vagrant
-    - source_root: /vagrant
+    - install_root: /home/vagrant
   tasks:
-#    - name: Install Phabricator
-#      shell: source /vagrant/install_rhel-derivs.sh
      - name: disable selinux # Ansible copy command fails, otherwise.
           selinux: state=disabled
-     - name: make repo path
-       file: state=directory dest=/home/vagrant/repo
-     - name: configure repo path
-       lineinfile: dest="/vagrant/phabricator/conf/default.conf.php" state=present regexp="'repository.default-local-path' => *" line="'repository.default-local-path' => '/home/vagrant/repo',"
+     - yum: pkg={{ item }}
+       with_items:
+        - python-setuptools # ReviewBoard prerequisite
+        - python-dev # ReviewBoard prerequisite
+        - ReviewBoard  # Hey, it's a package!
+        - sqlite.x86_64 # Cheapo database for now.
+        - memcached # Recommended for speed.
+        - python-memcached # Recommended for speed.
+        - patch # Required for ReviewBoard's diff viewer.
+        - git-core # Needed to communicate with Git
