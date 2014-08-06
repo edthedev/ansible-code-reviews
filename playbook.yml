@@ -6,8 +6,8 @@
   vars:
     - install_root: /home/vagrant
   tasks:
-     - name: enable EPEL
-       shell: rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+#     - name: enable EPEL
+#       shell: rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
      - yum: pkg={{ item }}
        with_items:
         - python-setuptools # ReviewBoard prerequisite
@@ -18,5 +18,7 @@
         - python-memcached # Recommended for speed.
         - patch # Required for ReviewBoard's diff viewer.
         - git-core # Needed to communicate with Git
+        - httpd.x86_64 # It is nice to have a web interface.
+        - mod_wsgi.x86_64
      #- name: disable selinux # Ansible copy command fails, otherwise.
      #  selinux: state=disabled
