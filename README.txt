@@ -48,6 +48,32 @@ Restart Apache::
 
     sudo service httpd restart
 
+Create at least one local Git repository::
+
+    mkdir /home/vagrant/repos
+    sudo chown -R vagrant:apache /home/vagrant/repos
+    git init --bare /home/vagrant/repos/NetIDApps.git
+
+Add the Vagrant SSH to your SSH Config::
+
+    vagrant ssh-config >> ~/.ssh/config
+
+Checkout a local copy of your repository,
+and add a 'review' remote::
+
+    git clone https://git-sdg.cites.illinois.edu/Scratch/delaport/NetIDApps.git
+    cd NetIDApps
+    git remote add review vagrant@default:/home/vagrant/repos/NetIDApps.git
+    git push review
+
+    Counting objects: 2579, done.
+    Delta compression using up to 4 threads.
+    Compressing objects: 100% (1117/1117), done.
+    Writing objects: 100% (2579/2579), 7.20 MiB | 0 bytes/s, done.
+    Total 2579 (delta 1495), reused 2443 (delta 1426)
+    To vagrant@default:/home/vagrant/repos/NetIDApps.git
+     * [new branch]      master -> master
+
 Visit your ReviewBoard site::
 
 Visit localhost to check configuration status:
