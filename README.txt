@@ -70,6 +70,36 @@ To review in GitWeb::
     delaport@Edwards-iMac.local:~/projects/NetIDApps
 
 
+
+Decide what to review
+----------------------
+
+ Configure Visual Diff with Git
+--------------------------------
+To set FileMerge as your git diff tool, first create a simple script that will be the translator between git and the FileMerge utility. I keep mine in the following location::
+
+    mkdir -p ~/bin
+    vim ~/bin/git-diff.sh
+
+The contents of the file will look like this::
+
+    #!/bin/sh
+    /usr/bin/opendiff "$2" "$5" -merge "$1"
+
+Once the script has been made, you’ll want it to be executable::
+
+    chmod u+x ~/bin/git-diff.sh
+
+Finally, tell git that you want to set it up as your default merge tool::
+
+    git config --global diff.external ~/bin/git-diff.sh
+
+If you later decide you hate it, run this command to go back::
+
+    git config --global --unset diff.external
+
+Mark code as approved
+----------------------
 Example merge command in Git::
 
     # Merge without 'fast forward'
@@ -78,5 +108,3 @@ Example merge command in Git::
     git merge in_review reviewed --no-ff -m 'Code reviewed on `date` by `whoami`'
 
     # You might want to create an alias
-
-
