@@ -54,6 +54,17 @@ Create at least one local Git repository::
     sudo chown -R vagrant:apache /home/vagrant/repos
     git init --bare /home/vagrant/repos/NetIDApps.git
 
+
+Visit your ReviewBoard site::
+
+Visit localhost to check configuration status:
+http://127.0.0.1:8080
+
+Note that http://localhost:8080/ will not work, because Phabricator demands a URL with a dot in it.
+
+On your own computer
+---------------------
+
 Add the Vagrant SSH to your SSH Config::
 
     vagrant ssh-config >> ~/.ssh/config
@@ -74,12 +85,22 @@ and add a 'review' remote::
     To vagrant@default:/home/vagrant/repos/NetIDApps.git
      * [new branch]      master -> master
 
-Visit your ReviewBoard site::
+Install RBTools::
 
-Visit localhost to check configuration status:
-http://127.0.0.1:8080
+    >virtualenv ENV
+    New python executable in ENV/bin/python
+    Installing setuptools, pip...done.
+    delaport@Edwards-iMac.local:~/projects/ansible-code-reviews
+    >source ENV/bin/activate
+    >pip install rbtools --allow-external rbtools --allow-unverified rbtools
 
-Note that http://localhost:8080/ will not work, because Phabricator demands a URL with a dot in it.
+Configure RBTools::
+
+    >cd ~/projects/NetIDApps
+    >rbt setup-repo
+
+
+Use RBTools to push to the server...::
 
 Troubleshooting
 ----------------
